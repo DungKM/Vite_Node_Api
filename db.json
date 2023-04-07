@@ -1,0 +1,34 @@
+{
+  "projects": [
+    {
+      "name": "Dự án 2",
+      "img": "https://picsum.photos/400/400",
+      "id": "2",
+      "categoryProjectId": "1"
+    },
+    {
+      "name": "Dự án 3",
+      "img": "https://picsum.photos/400/400",
+      "id": "3",
+      "categoryProjectId": "2"
+    }
+  ],
+  "categoryProjects": [
+    {
+      "id": "1",
+      "name": "Category A"
+    },
+    {
+      "id": "2",
+      "name": "Category B"
+    },
+    {
+      "id": "3",
+      "name": "Category C"
+    },
+    {
+      "id": "4",
+      "name": "Category D"
+    }
+  ]
+}
