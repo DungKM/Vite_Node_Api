@@ -1,16 +1,27 @@
 import { deleteProject, getProjects } from "../../../api/project";
+import { listUser } from "../../../components/listUser";
 import { useEffect, useState } from "../../../lib";
 
 const listProduct = () => {
   const [data, setData] = useState([]);
-
+  const [loggedInUser, setLoggedInUser] = useState(
+    JSON.parse(localStorage.getItem("user"))
+  );
   useEffect(() => {
     getProjects().then((data) => setData(data));
   }, []);
-  // Link css
-  // Tạo phần tử link
+
+
+  useEffect(() => {
+      // Tạo phần tử script
+    var script = document.createElement("script");
+    script.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js';
+    script.integrity = 'sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM';
+    script.crossOrigin = 'anonymous';
+    document.head.appendChild(script);
+    setLoggedInUser(JSON.parse(localStorage.getItem("user")));
+  }, [localStorage.getItem("user")]);
   var cssLink = document.createElement("link");
-  // Đặt thuộc tính cho phần tử link
   cssLink.setAttribute("rel", "stylesheet");
   cssLink.setAttribute(
     "href",
@@ -21,8 +32,6 @@ const listProduct = () => {
     "sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
   );
   cssLink.setAttribute("crossorigin", "anonymous");
-
-  // Chèn phần tử link vào thẻ head
   document.head.appendChild(cssLink);
 
   // chạy sau khi render
@@ -38,6 +47,14 @@ const listProduct = () => {
         });
       });
     }
+    const btnlogout = document.querySelector(".logout");
+    if(btnlogout){
+      btnlogout.addEventListener("click", function() {
+        localStorage.removeItem("user");
+        setLoggedInUser(null);
+      })
+    }
+ 
   });
 
   return `<div class="container my-5" >
@@ -47,8 +64,8 @@ const listProduct = () => {
           <a href="/admin/listproduct" class="btn btn-warning">List Products</a>
         </div>
         ${
-          localStorage.getItem("user")
-            ? JSON.parse(localStorage.getItem("user")).user.name
+          loggedInUser
+            ?  listUser(loggedInUser.user.name)
             : '<a href="/signin" class="btn btn-success">Login</a>'
         }
         </div>
@@ -72,7 +89,7 @@ const listProduct = () => {
                     <tr>
                         <td>${index + 1}</td>
                         <td>${project.name}</td>
-                        <td><img src="../image/${
+                        <td><img src="${
                           project.image
                         }" width="100" alt=""></td>
                         <td>${project.price} $</td>

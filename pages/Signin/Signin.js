@@ -43,7 +43,7 @@ const Signin = () => {
         })
         .then(() => {
           window.location.href = "/admin/listproduct"
-        });
+        })
     });
   });
 
